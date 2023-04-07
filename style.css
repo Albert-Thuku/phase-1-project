@@ -1,0 +1,227 @@
+/* Set default font and background color */
+body {
+  background-color: #333;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+/* Style the main heading */
+#mainHeading {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px 0;
+}
+
+/*Style the cart icon*/
+
+.cartContainer{
+  margin-right: 100px;
+  margin-bottom: 60px;
+}
+
+#cartIcon{
+  float: right;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+.cartContainer {
+  position: relative;
+}
+
+.cartContainer .quantity {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: rgba(255, 0, 0, 0.096);
+  color: white;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 0.8em;
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+}
+
+
+/*Style the shopping cart card*/
+.card {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: 0.5s;
+  display: none;
+}
+
+.card h1{
+  color: black;
+   font-weight: 100;
+}
+
+.card .checkout{
+  position:absolute;
+  bottom:0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+
+.card .checkout div{
+  background-color: #333;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.card .checkout div:nth-child(2){
+  background-color: antiquewhite;
+  color: black;
+}
+
+.clossShopping{
+  cursor: pointer;
+  color: rgb(212, 14, 14);
+  text-decoration: underline;
+}
+
+/* style for the cart item list */
+.listCard {
+  padding: 10px;
+  margin-top: 20px;
+  max-height: 200px;
+  height: 100%;
+}
+
+/* style for each cart item */
+.cartItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 1rem; /* increase font size for better readability */
+}
+
+.cartItem img {
+  width: 80px; /* reduce image width for better display */
+  height: auto;
+  margin-right: 10px; /* add margin to the right for better spacing */
+}
+
+.cartItemDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.cartItemDetails h4 {
+  margin: 0;
+  color: black;
+}
+
+.cartItemDetails p {
+  margin: 5px 0 0; /* add margin to the top for better spacing */
+  color: black;
+}
+
+
+/* style for the remove button */
+.removeBtn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Style the category display div */
+#categoryDiv {
+  text-align: center;
+}
+
+.categoryDisplay {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #333;
+  color: #fff;
+}
+
+.categoryDisplay h2 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+/* Style the product item cards */
+#productsDiv {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.productDisplay {
+  width: 30%;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* add this */
+}
+
+.productDisplay img {
+  max-width: 100%;
+  height: auto;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.productDisplay h3 {
+  font-size: 1.2rem;
+  margin: 10px;
+}
+
+.productDisplay p {
+  margin: 10px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.productDisplay p:first-child {
+  font-weight: bold;
+}
+
+.productDisplay button {
+  margin: 10px auto 20px; 
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  align-self: center; 
+}
+
+
+.productDisplay button{
+  display: inline-block;
+  width:100%;
+}
