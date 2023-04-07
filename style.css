@@ -271,3 +271,60 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #3e8e41;
 }
+
+
+#editProductForm {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+#editProductForm #editProductFormHeading {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+#editProductForm label {
+  display: inline-block;
+  width: 120px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#editProductForm input, #editProductForm select {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#editProductForm button[type="submit"], #editProductForm button[type="button"] {
+  display: block;
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#editProductForm button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+}
+
+#editProductForm button[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+#editProductForm button[type="button"] {
+  background-color: #f44336;
+  color: white;
+  border: none;
+}
+
+#editProductForm button[type="button"]:hover {
+  background-color: #da190b;
+}
+
