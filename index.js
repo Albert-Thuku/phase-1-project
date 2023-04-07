@@ -1,4 +1,3 @@
-//function to display categories
 function displayCategories() {
   //GET request for products data
   fetch('http://localhost:3000/products')
@@ -16,21 +15,20 @@ function displayCategories() {
           const categoriesDiv = document.getElementById('categoryDiv');
           categoriesDiv.appendChild(categoryName);
           //Event listener to select categories
-          let categories = document.getElementsByClassName('categoryDisplay')
-          categories.forEach((category) => {
+          let categories = document.getElementsByClassName('categoryDisplay');
+          [...categories].forEach(category => {
             category.addEventListener('click', (e) =>{
-              e.preventDefault()
-              let categoryName = category.textContent
-              let productsInCategory = categoryName === product.category
-              displayProducts(productsInCategory)
-            })
-          })
+              e.preventDefault();
+              let categoryName = category.textContent;
+              let productsInCategory = categoryName === product.category;
+              displayProducts(productsInCategory);
+            });
+          });
         }
       });
     })
     .catch(error => console.error(error));
 }
-
 
   displayCategories();
 
@@ -175,4 +173,44 @@ function displayProducts() {
   displayShoppingCart()
 
 
-  
+  //function that submits data from the form to the db.json file
+  function addProduct(){
+    const addProductForm = document.getElementById('addProductForm');
+
+    addProductForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const nameInput = document.getElementById('name');
+    const descriptionInput = document.getElementById('description');
+    const priceInput = document.getElementById('price');
+    const imageInput = document.getElementById('image');
+    const categoryInput = document.getElementById('category');
+    const purchaseCount = 0
+
+    const newProduct = {
+    name: nameInput.value,
+    description: descriptionInput.value,
+    price: parseFloat(priceInput.value),
+    image: imageInput.value,
+    category: categoryInput.value,
+    purchases_count: purchaseCount
+    };
+
+    fetch('http://localhost:3000/products', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newProduct)
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('New product added:', data);
+      // Reset the form
+      addProductForm.reset();
+    })
+    .catch(error => console.error(error));
+});
+
+  }
+  addProduct()
