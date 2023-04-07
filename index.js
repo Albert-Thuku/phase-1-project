@@ -1,27 +1,39 @@
 //function to display categories
 function displayCategories() {
-    //GET request for products data
-    fetch('http://localhost:3000/products')
-      .then(response => response.json())
-      .then(data => {
-        //array that will contain all category names
-        const categoryNames = [];
-        data.forEach(product => {
-          //if statement to display category names and prevent duplicates
-          if (!categoryNames.includes(product.category)) {
-            categoryNames.push(product.category);
-            const categoryName = document.createElement("div");
-            categoryName.className="categoryDisplay"
-            categoryName.textContent = product.category;
-            categoriesDiv = document.getElementById('categoryDiv')
-            categoriesDiv.appendChild(categoryName);
-          }
-        });
-      })
-      .catch(error => console.error(error));
-  }
+  //GET request for products data
+  fetch('http://localhost:3000/products')
+    .then(response => response.json())
+    .then(data => {
+      //array that will contain all category names
+      const categoryNames = [];
+      data.forEach(product => {
+        //if statement to display category names and prevent duplicates
+        if (!categoryNames.includes(product.category)) {
+          categoryNames.push(product.category);
+          const categoryName = document.createElement("div");
+          categoryName.className = "categoryDisplay";
+          categoryName.textContent = product.category;
+          const categoriesDiv = document.getElementById('categoryDiv');
+          categoriesDiv.appendChild(categoryName);
+          //Event listener to select categories
+          let categories = document.getElementsByClassName('categoryDisplay')
+          categories.forEach((category) => {
+            category.addEventListener('click', (e) =>{
+              e.preventDefault()
+              let categoryName = category.textContent
+              let productsInCategory = categoryName === product.category
+              displayProducts(productsInCategory)
+            })
+          })
+        }
+      });
+    })
+    .catch(error => console.error(error));
+}
+
 
   displayCategories();
+
 
 // function that displays products
 function displayProducts() {
@@ -48,17 +60,17 @@ function displayProducts() {
           </p>
           <div>
             <!--Button used to purchase an item-->
-            <button id="buyItem">Buy Item</button>
+            <button class="buyItem">Buy Item</button>
           </div>
           <div>
             <!--button used to add an item to the cart-->
-            <button id ="addCart">Add to cart</button>
+            <button class="addCart">Add to cart</button>
           </div>
         `;
         const productView = document.getElementById("productsDiv");
         productView.appendChild(productCard);
         // Event listener for buy item button to increase number of purchases
-        const buyItem = productCard.querySelector(`#buyItem`);
+        const buyItem = productCard.querySelector(".buyItem");
         buyItem.addEventListener("click", (e) => {
           e.preventDefault();
           if (confirm("Do you want to confirm purchase?") === true) {
@@ -73,7 +85,7 @@ function displayProducts() {
           }
         });
         // Event listener for add to cart button to add an item to the cart
-        const addBtn = productCard.querySelector("#addCart");
+        const addBtn = productCard.querySelector(".addCart");
         addBtn.addEventListener("click", () => {
           // create a new list item element and set its attributes and innerHTML
           const li = document.createElement("li");
@@ -88,7 +100,7 @@ function displayProducts() {
         </div>
         `;
 
-          // append the new list item to the cart list
+          // append the new list item to the cart
           cartList.appendChild(li);
 
           // increment the quantity in the cart
@@ -155,6 +167,7 @@ function displayProducts() {
     card.style.display = 'block';
    });
 
+   //Event listener that closes the shopping cart card when exit cart button is clicked
     closeShopping.addEventListener('click', () => {
     card.style.display = 'none';
     });
