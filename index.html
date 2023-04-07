@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeZone Web App</title>
+    <!--link to CSS-->
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+    <!--Website's main heading-->
+    <header id="mainHeading">TradeZone : Shopping Made Convinient For All
+    </header>
+
+    <div class="container">
+        <!--div containing the cart image to acces the shopping cart-->
+        <div class="cartContainer">
+            <img id ="cartIcon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAXpJREFUSEvNlEFSAjEQRX/Hci3eAE8gnEA9gdxA3erCTIah3Ik7i5lps9GteAL1BnoC8QTqCcQ1ZWKNBVSEmTAFYtnb7vzXP500YclBS9bH3wEipezQTZ+Aboc5+A13YwcO4FvXCrGTJMnDopCpK2oqJQm4AHAfMzd+HSClrKwK8Z4Jrxizca716yKQ3CE3w7BL1u7NLUzUi9O0np3PBURS1iDE09wA4C1mrhYCskRTqR4BmwAOYuZuGdjIOQFnHea2FxAptQ/gGo5dH2Q4uxcAFXd23o8WKdUHsAZj6rHWPR9g3BDwGDNvj2r9gCDQIDq2RDdJmmaOCiNSKvszW5NX6gWcSFn9FCKzjYEx61rrzNFUOHUfA2Oqbt3MXRQpdQdg1wJBwqzzAC2l2hY4zXM6E9AKw4a19rbMK8pbLzMBE0+2kGOB54S5NllQClCm+6KaUoBWGF5aaw+J6KqTpkeumC/n/WiuiLvKY+YfTflypQFLd7D0GfxrwBdk8aoZBBSNkQAAAABJRU5ErkJggg=="/>
+            <span class="quantity">0</span>
+        </div>
+
+        <div class="list"></div>
+
+    </div>   
+
+    <!--div containing the shopping cart card-->
+    <div class="card">
+        <h1>Shopping Cart</h1>
+        <ul class="listCard"></ul>
+        <div class="checkout">
+            <div class="total">Total: 0</div>
+            <div class="clossShopping">Exit cart</div>
+        </div>
+    </div>
+
+    <!--div containing the different categories-->
+    <div id="categoryDiv">
+        
+    </div>
+    <!--div containing product items that are in cards-->
+    <div id="productsDiv">
+
+    </div>
+
+    <!--link to js file-->
+    <script type="text/javascript" src="index.js">
+        process.setMaxListeners(20);
+    </script>
+</body>
+</html>
