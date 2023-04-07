@@ -65,6 +65,35 @@
             <button type="submit">Add Product</button>
           </form>
     </div>
+    <!--div containing the edit product form-->
+    <div id="editProductForm">
+        <h2 id="editProductFormHeading">Edit Product Form</h2>
+        <form id="editProduct">
+            <label for="selectProduct">Select product:</label>
+            <select id="selectProduct" name="selectProduct">
+                <!--Add options dynamically using JavaScript-->
+            </select><br>
+    
+            <label for="editName">Product name:</label>
+            <input type="text" id="editName" name="editName" required><br>
+    
+            <label for="editDescription">Description:</label>
+            <input type="text" id="editDescription" name="editDescription" required><br>
+    
+            <label for="editPrice">Price:</label>
+            <input type="number" id="editPrice" name="editPrice" min="0" step="0.01" required><br>
+    
+            <label for="editImage">Image URL:</label>
+            <input type="url" id="editImage" name="editImage" required><br>
+    
+            <label for="editCategory">Category:</label>
+            <input type="text" id="editCategory" name="editCategory" required><br>
+    
+            <button type="submit">Save Changes</button>
+            <button type="button" id="cancelEdit">Cancel</button>
+        </form>
+    </div>
+    
     <!--link to js file-->
     <script type="text/javascript" src="index.js">
         process.setMaxListeners(20);
