@@ -30,7 +30,7 @@
         <h1>Shopping Cart</h1>
         <ul class="listCard"></ul>
         <div class="checkout">
-            <div class="total">Total: 0</div>
+            <div class="total">0</div>
             <div class="clossShopping">Exit cart</div>
         </div>
     </div>
@@ -43,7 +43,28 @@
     <div id="productsDiv">
 
     </div>
-
+    <!--div containing form to add products to the product list-->
+    <div id="productForm">
+        <h2 id="productFormHeading">Add Product Form</Form></h2>
+        <form id="addProductForm">
+            <label for="name">Product name:</label>
+            <input type="text" id="name" name="name" required><br>
+          
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" required><br>
+          
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" min="0" step="0.01" required><br>
+          
+            <label for="image">Image URL:</label>
+            <input type="url" id="image" name="image" required><br>
+          
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" required><br>
+          
+            <button type="submit">Add Product</button>
+          </form>
+    </div>
     <!--link to js file-->
     <script type="text/javascript" src="index.js">
         process.setMaxListeners(20);
