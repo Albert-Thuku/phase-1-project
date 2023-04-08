@@ -64,6 +64,10 @@ function displayProducts() {
             <!--button used to add an item to the cart-->
             <button class="addCart">Add to cart</button>
           </div>
+          <div>
+            <!--button used to remove an item from the cart-->
+            <button class="deleteItem">Delete Item</button>
+          </div>
         `;
         const productView = document.getElementById("productsDiv");
         productView.appendChild(productCard);
@@ -82,6 +86,28 @@ function displayProducts() {
             alert("ORDER HAS BEEN CANCELLED");
           }
         });
+        // Event listener for delete button to remove the product from the database
+        const deleteBtn = productCard.querySelector(".deleteItem");
+        deleteBtn.addEventListener("click", () => {
+        // send DELETE request to server
+        fetch(`http://localhost:3000/products/${product.id}`, {
+          method: "DELETE"
+        })
+        .then(response => {
+        // remove the product from the page if the DELETE request was successful
+        if (response.ok) {
+        productView.removeChild(productCard);
+        alert("Product deleted successfully!");
+        } else {
+        throw new Error("Failed to delete product");
+        }
+        })
+        .catch(error => {
+        console.error(error);
+        alert("Failed to delete product");
+        });
+}); 
+
         // Event listener for add to cart button to add an item to the cart
         const addBtn = productCard.querySelector(".addCart");
         addBtn.addEventListener("click", () => {
@@ -214,3 +240,81 @@ function displayProducts() {
 
   }
   addProduct()
+
+ //function that edits the product's details
+ function editProduct(){
+ // Get references to DOM elements
+ const selectProduct = document.querySelector("#selectProduct");
+ const editName = document.querySelector("#editName");
+ const editDescription = document.querySelector("#editDescription");
+ const editPrice = document.querySelector("#editPrice");
+ const editImage = document.querySelector("#editImage");
+ const editCategory = document.querySelector("#editCategory");
+ const editProductForm = document.querySelector("#editProduct");
+ const saveChanges = document.querySelector('#saveChanges')
+
+ // Fetch products data from db.json
+ fetch("http://localhost:3000/products")
+  .then((resp) => resp.json())
+  .then((data) => {
+    // Populate select element with options
+    data.forEach((product) => {
+      const option = document.createElement("option");
+      option.value = product.id;
+      option.text = product.name;
+      selectProduct.appendChild(option);
+    });
+
+    // Add event listener to update product details when option is selected
+    selectProduct.addEventListener("change", () => {
+      const selectedProduct = data.find(
+        (product) => product.id === selectProduct.value
+      );
+      editName.value = selectedProduct.name;
+      editDescription.value = selectedProduct.description;
+      editPrice.value = selectedProduct.price;
+      editImage.value = selectedProduct.image;
+      editCategory.value = selectedProduct.category;
+    });
+
+    // Add event listener to edit product form
+    saveChanges.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const updatedProduct = {
+        id: selectProduct.value,
+        name: editName.value,
+        description: editDescription.value,
+        price: Number(editPrice.value),
+        image: editImage.value,
+        category: editCategory.value,
+      };
+      // Update product data in db.json
+      fetch(`db.json/products/${updatedProduct.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedProduct),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Product updated successfully:", data);
+          // Reset form fields
+          selectProduct.value = "";
+          editName.value = "";
+          editDescription.value = "";
+          editPrice.value = "";
+          editImage.value = "";
+          editCategory.value = "";
+        })
+        .catch((error) => {
+          console.error("Error updating product:", error);
+        });
+    });
+  })
+  .catch((error) => {
+    console.error("Error fetching products data:", error);
+  });
+
+}
+editProduct();
