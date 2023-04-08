@@ -1,12 +1,12 @@
 function displayCategories() {
-  //GET request for products data
+  // GET request for products data
   fetch('http://localhost:3000/products')
     .then(response => response.json())
     .then(data => {
-      //array that will contain all category names
+      // Array that will contain all category names
       const categoryNames = [];
       data.forEach(product => {
-        //if statement to display category names and prevent duplicates
+        // If statement to display category names and prevent duplicates
         if (!categoryNames.includes(product.category)) {
           categoryNames.push(product.category);
           const categoryName = document.createElement("div");
@@ -14,15 +14,12 @@ function displayCategories() {
           categoryName.textContent = product.category;
           const categoriesDiv = document.getElementById('categoryDiv');
           categoriesDiv.appendChild(categoryName);
-          //Event listener to select categories
-          let categories = document.getElementsByClassName('categoryDisplay');
-          [...categories].forEach(category => {
-            category.addEventListener('click', (e) =>{
-              e.preventDefault();
-              let categoryName = category.textContent;
-              let productsInCategory = categoryName === product.category;
-              displayProducts(productsInCategory);
-            });
+          // Event listener to select categories
+          categoryName.addEventListener('click', (e) => {
+            e.preventDefault();
+            let categoryIdentifier = categoryName.textContent;
+            let productsInCategory = data.filter(product => product.category === categoryIdentifier);
+            displayProducts(productsInCategory);
           });
         }
       });
@@ -34,12 +31,14 @@ function displayCategories() {
 
 
 // function that displays products
-function displayProducts() {
+function displayProducts(productsInCategory) {
   // find the cart and list elements
   const cart = document.querySelector(".cartContainer");
   const cartList = document.querySelector(".listCard");
   const quantity = document.querySelector(".quantity");
-
+  // Clear the existing products from the productsDiv
+  const productsDiv = document.getElementById("productsDiv");
+  productsDiv.innerHTML = "";
   // GET request for products data
   fetch("http://localhost:3000/products")
     .then((resp) => resp.json())
@@ -158,7 +157,7 @@ function displayProducts() {
             cartList.removeChild(li);
           });
         });
-
+      
         // append the product card to the product container
         productView.appendChild(productCard);
       });
@@ -242,79 +241,89 @@ function displayProducts() {
   addProduct()
 
  //function that edits the product's details
- function editProduct(){
- // Get references to DOM elements
- const selectProduct = document.querySelector("#selectProduct");
- const editName = document.querySelector("#editName");
- const editDescription = document.querySelector("#editDescription");
- const editPrice = document.querySelector("#editPrice");
- const editImage = document.querySelector("#editImage");
- const editCategory = document.querySelector("#editCategory");
- const editProductForm = document.querySelector("#editProduct");
- const saveChanges = document.querySelector('#saveChanges')
+function editProduct() {
+  // Get references to DOM elements
+  const selectProduct = document.querySelector("#selectProduct");
+  const editName = document.querySelector("#editName");
+  const editDescription = document.querySelector("#editDescription");
+  const editPrice = document.querySelector("#editPrice");
+  const editImage = document.querySelector("#editImage");
+  const editCategory = document.querySelector("#editCategory");
+  const editProductForm = document.querySelector("#editProduct");
+  const saveChanges = document.querySelector("#saveChanges");
 
- // Fetch products data from db.json
- fetch("http://localhost:3000/products")
-  .then((resp) => resp.json())
-  .then((data) => {
-    // Populate select element with options
-    data.forEach((product) => {
-      const option = document.createElement("option");
-      option.value = product.id;
-      option.text = product.name;
-      selectProduct.appendChild(option);
-    });
+  // Fetch products data from db.json
+  fetch("http://localhost:3000/products")
+    .then((resp) => resp.json())
+    .then((data) => {
+      // Populate select element with options
+      data.forEach((product) => {
+        const option = document.createElement("option");
+        option.value = product.id;
+        option.text = product.name;
+        selectProduct.appendChild(option);
+      });
 
-    // Add event listener to update product details when option is selected
-    selectProduct.addEventListener("change", () => {
-      const selectedProduct = data.find(
-        (product) => product.id === selectProduct.value
-      );
-      editName.value = selectedProduct.name;
-      editDescription.value = selectedProduct.description;
-      editPrice.value = selectedProduct.price;
-      editImage.value = selectedProduct.image;
-      editCategory.value = selectedProduct.category;
-    });
+      //adding of product details to an array
+      let productDetails = [];
+      productDetails.push(...data);
 
-    // Add event listener to edit product form
-    saveChanges.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const updatedProduct = {
-        id: selectProduct.value,
-        name: editName.value,
-        description: editDescription.value,
-        price: Number(editPrice.value),
-        image: editImage.value,
-        category: editCategory.value,
-      };
-      // Update product data in db.json
-      fetch(`db.json/products/${updatedProduct.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedProduct),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Product updated successfully:", data);
-          // Reset form fields
-          selectProduct.value = "";
-          editName.value = "";
-          editDescription.value = "";
-          editPrice.value = "";
-          editImage.value = "";
-          editCategory.value = "";
+      // Add event listener to update product details when option is selected
+      selectProduct.addEventListener("change", () => {
+        const findSelectedProduct = productDetails.find(
+          (product) => product.id === selectProduct.value
+        );
+        const selectedProduct = findSelectedProduct;
+        if (selectedProduct) {
+          editName.value = selectedProduct.name;
+          editDescription.value = selectedProduct.description;
+          editPrice.value = selectedProduct.price;
+          editImage.value = selectedProduct.image;
+          editCategory.value = selectedProduct.category;
+        } else {
+          console.log("The value is null");
+        }
+      });
+
+      // Add event listener to edit product form
+      saveChanges.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const updatedProduct = {
+          id: selectProduct.value,
+          name: editName.value,
+          description: editDescription.value,
+          price: Number(editPrice.value),
+          image: editImage.value,
+          category: editCategory.value,
+        };
+        // Update product data in db.json
+        fetch(`http://localhost:3000/products/${updatedProduct.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedProduct),
         })
-        .catch((error) => {
-          console.error("Error updating product:", error);
-        });
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Product updated successfully:", data);
+            // Reset form fields
+            selectProduct.value = "";
+            editName.value = "";
+            editDescription.value = "";
+            editPrice.value = "";
+            editImage.value = "";
+            editCategory.value = "";
+          })
+          .catch((error) => {
+            console.error("Error updating product:", error);
+          });
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching products data:", error);
     });
-  })
-  .catch((error) => {
-    console.error("Error fetching products data:", error);
-  });
-
 }
+
+  
 editProduct();
